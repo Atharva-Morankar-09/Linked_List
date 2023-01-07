@@ -1,0 +1,34 @@
+
+GFG Link - https://practice.geeksforgeeks.org/problems/da62a798bca208c7a678c133569c3dc7f5b73500/1
+
+class Solution {
+public:
+    Node* merge(Node* a, Node* b){
+        if(a==NULL){
+            return b;
+        }
+        if(b==NULL){
+            return a;
+        }
+        
+        Node* res;
+        if(a->data<=b->data){
+            res=a;
+            res->bottom=merge(a->bottom,b);
+        }
+        else{
+            res=b;
+            res->bottom=merge(a,b->bottom);
+        }
+      return res;    
+    }
+    
+    Node *flatten(Node *root)
+    {
+        if(root==NULL || root->next==NULL){
+            return root;
+        }
+        
+      return merge(root, flatten(root->next));    
+    }
+};
