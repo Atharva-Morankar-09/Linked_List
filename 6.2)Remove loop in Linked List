@@ -1,0 +1,58 @@
+
+GFG Link - https://practice.geeksforgeeks.org/problems/remove-loop-in-linked-list/1
+
+/*
+structure of linked list node:
+
+struct Node
+{
+    int data;
+    Node* next;
+    
+    Node(int val)
+    {
+        data = val;
+        next = NULL;
+    }
+};
+*/
+
+class Solution
+{
+    public:
+    //Function to remove a loop in the linked list.
+    void removeLoop(Node* head)
+    {
+        Node* slow=head;
+        Node* fast=head;
+        Node* loop=head;
+        while(slow!=NULL && fast!=NULL && fast->next!=NULL)
+        {
+            fast=fast->next->next;
+            slow=slow->next;
+            if(slow==fast)
+            {
+                break;
+            }
+        }
+        
+        if(slow==loop)
+        {
+            while(fast->next!=slow)
+            {
+                fast=fast->next;
+            }
+         fast->next=NULL;        
+        }
+        
+        else if(slow==fast)
+        {
+            while(loop->next!=slow->next)
+            {
+              slow=slow->next;
+              loop=loop->next;
+            }
+          slow->next=NULL;        
+        }
+    }
+};
