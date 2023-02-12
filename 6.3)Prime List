@@ -1,0 +1,49 @@
+
+GFG Link - https://practice.geeksforgeeks.org/problems/6cb0782855c0f11445b8d70e220f888e6ea8e22a/1
+
+class Solution{
+public:
+    
+    bool isPrime(int n){
+        if(n==0 || n==1){
+            return false;
+        }
+        for(int i=2;i<=sqrt(n);i++){
+            if(n%i==0){
+                return false;
+            }
+        }
+      return true;    
+    }
+
+    Node *primeList(Node *head){
+        Node* curr=head;
+        while(curr!=NULL){
+            int data1=curr->val;
+            int data2=data1;
+            if(isPrime(data1)){
+                curr=curr->next;
+                continue;
+            }
+            else{
+                while(!isPrime(data1) && !isPrime(data2)){
+                    data1++;
+                    data2--;
+                }
+            }
+            
+            if(isPrime(data1) && isPrime(data2)){
+                curr->val=min(data1,data2);
+            }
+            else if(isPrime(data1)){
+                curr->val=data1;
+            }
+            else{
+                curr->val=data2;
+            }
+            
+            curr=curr->next;
+        }
+      return head;    
+    }
+};
