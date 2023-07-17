@@ -1,0 +1,96 @@
+
+Leetcode Link - https://leetcode.com/problems/add-two-numbers-ii/
+
+1) Using Stack - 
+
+class Solution {
+public:
+    
+    ListNode* addTwoNumbers(ListNode* l1, ListNode* l2) {
+        stack<int> st1, st2;
+        
+        while(l1!=NULL){
+            st1.push(l1->val);
+            l1=l1->next;
+        }
+        
+        while(l2!=NULL){
+            st2.push(l2->val);
+            l2=l2->next;
+        }
+        
+        int totalSum=0, carry=0;
+        ListNode* ans = new ListNode();
+        
+        while(!st1.empty() || !st2.empty()){
+            if(!st1.empty()){
+                totalSum+=st1.top();
+                st1.pop();
+            }
+            
+            if(!st2.empty()){
+                totalSum+=st2.top();
+                st2.pop();
+            }
+            
+            ans->val = totalSum%10;
+            carry=totalSum/10;
+            ListNode* head = new ListNode(carry);
+            head->next=ans;
+            ans=head;
+            totalSum=carry;
+        }
+        
+      return carry==0?ans->next:ans;  
+    }
+};
+
+------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+2) Using Reverse LL -
+
+class Solution {
+public:
+    
+    ListNode* reverseLL(ListNode* curr){
+        ListNode* prev = NULL;
+        ListNode* temp = NULL;
+        
+        while(curr!=NULL){
+            temp = curr->next;
+            curr->next=prev;
+            prev=curr;
+            curr=temp;
+        }
+      return prev;  
+    }
+    
+    ListNode* addTwoNumbers(ListNode* l1, ListNode* l2) {
+        ListNode* r1 = reverseLL(l1);
+        ListNode* r2 = reverseLL(l2);
+        
+        int totalSum=0, carry=0;
+        ListNode* ans = new ListNode();
+        
+        while(r1 || r2){
+            if(r1){
+                totalSum+=r1->val;
+                r1=r1->next;
+            }
+            
+            if(r2){
+                totalSum+=r2->val;
+                r2=r2->next;
+            }
+            
+            ans->val = totalSum%10;
+            carry=totalSum/10;
+            ListNode* head = new ListNode(carry);
+            head->next=ans;
+            ans=head;
+            totalSum=carry;
+        }
+        
+      return carry==0?ans->next:ans;  
+    }
+};
