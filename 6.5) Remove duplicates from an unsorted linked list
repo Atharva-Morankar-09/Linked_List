@@ -1,0 +1,26 @@
+
+GFG Link - https://practice.geeksforgeeks.org/problems/remove-duplicates-from-an-unsorted-linked-list/1
+
+class Solution
+{
+    public:
+    //Function to remove duplicates from unsorted linked list.
+    Node * removeDuplicates( Node *head) 
+    {
+      unordered_map<int,int> mp;
+      Node* curr=head;
+      Node* prev=NULL;
+      
+      while(curr!=NULL){
+          mp[curr->data]++;
+          if(mp[curr->data]>1){
+              prev->next=curr->next;
+          }
+          else{
+              prev=curr;
+          }
+        curr=curr->next;  
+      }
+     return head; 
+    }
+};
